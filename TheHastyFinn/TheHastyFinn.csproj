@@ -67,6 +67,10 @@
       <HintPath>..\packages\StockSharp.4.3.14.1\lib\net45\CommLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.2.16.0.0\lib\net45\CsvHelper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ddfplus, Version=1.0.2.61, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\StockSharp.4.3.14.1\lib\net45\ddfplus.dll</HintPath>
       <Private>True</Private>
@@ -503,6 +507,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="XFactor\FScore.cs" />
+    <Compile Include="XFactor\WebCSVHandler.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="XFactor\XFactor.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

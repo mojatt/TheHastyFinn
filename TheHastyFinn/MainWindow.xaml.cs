@@ -24,5 +24,10 @@ namespace TheHastyFinn
         {
             InitializeComponent();
         }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            XFactor xfactor = new XFactor();
+        }
     }
 }
