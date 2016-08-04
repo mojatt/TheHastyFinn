@@ -20,6 +20,8 @@ namespace TheHastyFinn
     /// </summary>
     public partial class MainWindow : Window
     {
+        FScore fscorelist;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -27,7 +29,25 @@ namespace TheHastyFinn
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            XFactor xfactor = new XFactor();
+            fscorelist = new FScore();
+
+            foreach(FScoreStock stock in fscorelist.StockList)
+            {
+                listBox.Items.Add(stock.Ticker);
+            }
+        }
+
+        private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (fscorelist == null) return;
+
+            ListBox box = (sender as ListBox);
+            string stock = box.SelectedItem.ToString();
+
+            XFactor xf = new XFactor();
+            xf.GenPoints(stock);
+
+
         }
     }
 }
