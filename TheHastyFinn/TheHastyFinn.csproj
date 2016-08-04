@@ -525,6 +525,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="XFactor\XFactor.cs" />
+    <Compile Include="XFactor\XFactorGraphModel.cs" />
     <Compile Include="XFactor\XFactorUI.xaml.cs">
       <DependentUpon>XFactorUI.xaml</DependentUpon>
     </Compile>
@@ -572,6 +573,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Documentation\xfactor.m" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

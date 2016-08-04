@@ -4,38 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using YSQ.core.Historical;
-using OxyPlot;
-using OxyPlot.Axes;
+
+
 
 namespace TheHastyFinn
 {
     public class XFactor
     {
-        IEnumerable<HistoricalPrice> _quotes;
-
-        public XFactor()
+        public XFactor(string ticker)
         {
-            this.Points = new List<DataPoint>();
-            this.PlotTitle = "";
+            Ticker = ticker;
         }
         
-        public void GenPoints(string ticker)
-        {
-            StockQuotes sq = new StockQuotes(ticker);
-            _quotes = sq.HistPrices();
+        public string Ticker { get; private set; }
 
-            this.Points = new List<DataPoint>();
-            foreach(var price in _quotes)
-            {
-                this.Points.Add(new DataPoint(DateTimeAxis.ToDouble(price.Date), LinearAxis.ToDouble(price.Price)));
-            }
-            
-            this.PlotTitle = "";
-        }
-
-        public IList<DataPoint> Points { get; private set; }
-        public string PlotTitle { get; private set; }
+        // go and get quotes
+        
+        // calculate XFactor across many moving windows (25, 50, 100, 125, 150, etc).
+        // maybe even have a spread? what do the trends look like for diff intervals and ranges?
 
     }
 }

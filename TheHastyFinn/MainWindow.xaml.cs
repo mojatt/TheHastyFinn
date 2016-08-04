@@ -44,8 +44,8 @@ namespace TheHastyFinn
             ListBox box = (sender as ListBox);
             string stock = box.SelectedItem.ToString();
 
-            XFactor xf = new XFactor();
-            xf.GenPoints(stock);
+            XFactor xf = new XFactor(stock);
+            
 
 
         }
