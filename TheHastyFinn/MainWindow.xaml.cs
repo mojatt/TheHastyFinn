@@ -45,8 +45,10 @@ namespace TheHastyFinn
             string stock = box.SelectedItem.ToString();
 
             XFactor xf = new XFactor(stock);
-            
 
+            XFactorUI xfui = new XFactorUI();
+            xfui.DataContext = xf.XFGraphModel;
+            xfui.Show();
 
         }
     }

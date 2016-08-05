@@ -14,9 +14,19 @@ namespace TheHastyFinn
         public XFactor(string ticker)
         {
             Ticker = ticker;
+            _graphmodel = new XFactorGraphModel();
+            _graphmodel.StockTicker = ticker;
         }
-        
+
+        private XFactorGraphModel _graphmodel;
+
         public string Ticker { get; private set; }
+
+        public XFactorGraphModel XFGraphModel
+        {
+            get { return _graphmodel; }
+            private set { _graphmodel = value; }
+        }
 
         // go and get quotes
         

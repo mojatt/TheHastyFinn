@@ -6,39 +6,62 @@ using System.Threading.Tasks;
 
 using OxyPlot;
 using OxyPlot.Axes;
+using OxyPlot.Series;
 
 using YSQ.core.Historical;
 
 namespace TheHastyFinn
 {
-    class XFactorGraphModel
+    public class XFactorGraphModel
     {
         IEnumerable<HistoricalPrice> _quotes;
+        string _ticker;
+
+        public PlotModel MyModel { get; private set; }
 
         public XFactorGraphModel()
         {
-            this.Points = new List<DataPoint>();
-            this.PlotTitle = "";
+            this.MyModel = new PlotModel();
+            
+            _ticker = "";
+        }
+        
+        private void UpdateModel()
+        {
+            this.MyModel.Title = StockTicker;
+            this.MyModel.Series.Add(GenPoints(StockTicker));
+            this.MyModel.Axes.Add(new DateTimeAxis
+            {
+                Position = AxisPosition.Bottom,
+                StringFormat = "yyyy-MM-dd",
+                IntervalType = DateTimeIntervalType.Days,
+            });
+        }
+        
+        public string StockTicker
+        {
+            get { return _ticker; }
+            set
+            {
+                _ticker = value;
+                UpdateModel();                
+            }
         }
 
-        public IList<DataPoint> Points { get; private set; }
-        public string PlotTitle { get; private set; }
-
-
-        public void GenPoints(string ticker)
+        private LineSeries GenPoints(string ticker)
         {
             StockQuotes sq = new StockQuotes(ticker);
             _quotes = sq.HistPrices();
 
-            this.Points = new List<DataPoint>();
+            OxyPlot.Series.LineSeries series = new LineSeries();
+
             foreach (var price in _quotes)
             {
-                this.Points.Add(new DataPoint(DateTimeAxis.ToDouble(price.Date), LinearAxis.ToDouble(price.Price)));
+                series.Points.Add(new DataPoint(DateTimeAxis.ToDouble(price.Date), LinearAxis.ToDouble(price.Price)));
             }
 
-            this.PlotTitle = "";
+            return series;
         }
-
 
     }
 }

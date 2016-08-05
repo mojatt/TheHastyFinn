@@ -16,7 +16,7 @@ namespace TheHastyFinn
             Ticker = ticker;
 
             Start = DateTime.Now;
-            Start.AddYears(-1); // default a year of history
+            Start = Start.AddYears(-1); // default a year of history
 
             End = DateTime.Now;
         }
