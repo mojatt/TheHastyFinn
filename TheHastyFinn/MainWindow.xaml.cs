@@ -46,10 +46,11 @@ namespace TheHastyFinn
             ListBox box = (sender as ListBox);
             string stock = box.SelectedItem.ToString();
 
-            XFactor xf = new XFactor(stock);
+            //XFactor xf = new XFactor(stock);
+            XFactorHandler xfh = new XFactorHandler(stock);
 
             XFactorUI xfui = new XFactorUI();
-            xfui.DataContext = xf.XFGraphModel;
+            xfui.DataContext = xfh.xFGM;
             xfui.Show();
         }
 

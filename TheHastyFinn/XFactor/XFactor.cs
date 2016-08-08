@@ -16,8 +16,8 @@ namespace TheHastyFinn
         {
             Ticker = ticker;
 
-            _graphmodel = new XFactorGraphModel();
-            _graphmodel.StockTicker = ticker;
+            //_graphmodel = new XFactorGraphModel();
+            //_graphmodel.StockTicker = ticker;
 
             StockQuotes sq = new StockQuotes(Ticker);
             Quotes = sq.HistPrices();
@@ -34,15 +34,17 @@ namespace TheHastyFinn
         public Dictionary<int,List<decimal>> PeriodVelocityData { get; set; }
         public Dictionary<int, List<decimal>> PeriodGravityData { get; set; }
 
-        private List<HistoricalPrice> Quotes { get; set; }
+        public List<HistoricalPrice> Quotes { get; set; }
         public List<int> Periods { get; set; }
         
+        /*
         private XFactorGraphModel _graphmodel;
         public XFactorGraphModel XFGraphModel
         {
             get { return _graphmodel; }
             private set { _graphmodel = value; }
         }
+        */
 
         // calculate XFactor across many moving windows (25, 50, 100, 125, 150, etc).
         // maybe even have a spread? what do the trends look like for diff intervals and ranges?

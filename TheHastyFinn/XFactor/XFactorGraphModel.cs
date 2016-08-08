@@ -19,19 +19,29 @@ namespace TheHastyFinn
         public PlotModel TickerModel { get; private set; }
         public PlotModel XFactorModel { get; private set; }
 
-        private List<DateTime> Dates { get; }
-        private IEnumerable<HistoricalPrice> Quotes { get; set; }
+        public List<DateTime> Dates { get; set; }
+        public List<HistoricalPrice> Quotes { get; set; }
 
         public XFactorGraphModel()
         {
             this.TickerModel = new PlotModel();
             this.XFactorModel = new PlotModel();
 
+            Quotes = null;
             _ticker = "";
         }
 
-        private void UpdateModel()
+        public void LoadData(string ticker, List<HistoricalPrice> quotes)
         {
+            StockTicker = ticker;
+            Quotes = quotes;
+            UpdateModel();
+        }
+
+        public void UpdateModel()
+        {
+            if (Quotes == null) return;
+
             /*
              * basic ticker
              */
@@ -60,17 +70,7 @@ namespace TheHastyFinn
         public string StockTicker
         {
             get { return _ticker; }
-            set
-            {
-                _ticker = value;
-                GetQuotes(_ticker); // update quotes!
-                UpdateModel();
-            }
-        }
-        private void GetQuotes(string ticker)
-        {
-            StockQuotes sq = new StockQuotes(ticker);
-            Quotes = sq.HistPrices();
+            set { _ticker = value; }
         }
 
         /*    THIS IS RECURSIVE... NOT GOOD

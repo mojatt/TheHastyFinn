@@ -527,6 +527,8 @@
     <Compile Include="XFactor\XFactor.cs" />
     <Compile Include="XFactor\XFactorAlgoData.cs" />
     <Compile Include="XFactor\XFactorGraphModel.cs" />
+    <Compile Include="XFactor\XFactorHandler.cs" />
+    <Compile Include="XFactor\XFactorHistoricalVerify.cs" />
     <Compile Include="XFactor\XFactorUI.xaml.cs">
       <DependentUpon>XFactorUI.xaml</DependentUpon>
     </Compile>
