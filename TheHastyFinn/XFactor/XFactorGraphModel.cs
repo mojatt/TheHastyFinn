@@ -14,52 +14,101 @@ namespace TheHastyFinn
 {
     public class XFactorGraphModel
     {
-        IEnumerable<HistoricalPrice> _quotes;
-        string _ticker;
+        private string _ticker;
 
-        public PlotModel MyModel { get; private set; }
+        public PlotModel TickerModel { get; private set; }
+        public PlotModel XFactorModel { get; private set; }
+
+        private List<DateTime> Dates { get; }
+        private IEnumerable<HistoricalPrice> Quotes { get; set; }
 
         public XFactorGraphModel()
         {
-            this.MyModel = new PlotModel();
-            
+            this.TickerModel = new PlotModel();
+            this.XFactorModel = new PlotModel();
+
             _ticker = "";
         }
-        
+
         private void UpdateModel()
         {
-            this.MyModel.Title = StockTicker;
-            this.MyModel.Series.Add(GenPoints(StockTicker));
-            this.MyModel.Axes.Add(new DateTimeAxis
+            /*
+             * basic ticker
+             */
+            this.TickerModel.Title = StockTicker;
+            this.TickerModel.Series.Add(GenPoints());
+            this.TickerModel.Axes.Add(new DateTimeAxis
+            {
+                Position = AxisPosition.Bottom,
+                StringFormat = "yyyy-MM-dd",
+                IntervalType = DateTimeIntervalType.Days,
+            });
+
+            /*
+             * xfactor ticker
+             */
+            this.XFactorModel.Title = String.Format("XFactor");
+            this.XFactorModel.Series.Add(GenPoints());
+            this.XFactorModel.Axes.Add(new DateTimeAxis
             {
                 Position = AxisPosition.Bottom,
                 StringFormat = "yyyy-MM-dd",
                 IntervalType = DateTimeIntervalType.Days,
             });
         }
-        
+
         public string StockTicker
         {
             get { return _ticker; }
             set
             {
                 _ticker = value;
-                UpdateModel();                
+                GetQuotes(_ticker); // update quotes!
+                UpdateModel();
             }
         }
-
-        private LineSeries GenPoints(string ticker)
+        private void GetQuotes(string ticker)
         {
             StockQuotes sq = new StockQuotes(ticker);
-            _quotes = sq.HistPrices();
+            Quotes = sq.HistPrices();
+        }
 
+        /*    THIS IS RECURSIVE... NOT GOOD
+        private LineSeries GenPointsXFVelocity()
+        {
             OxyPlot.Series.LineSeries series = new LineSeries();
 
-            foreach (var price in _quotes)
+            XFactor xf = new XFactor(StockTicker);
+            List<int> periods = xf.Periods;
+            List<decimal> list = xf.PeriodVelocityData[periods[0]];
+            for(int i = 0; i < list.Count(); i++)
+            {
+                series.Points.Add(new DataPoint(i, Convert.ToDouble(list[i])));
+            }
+            return series;
+        }
+        */
+
+        private LineSeries GenPoints()
+        {
+            OxyPlot.Series.LineSeries series = new LineSeries();
+
+            foreach (var price in Quotes)
             {
                 series.Points.Add(new DataPoint(DateTimeAxis.ToDouble(price.Date), LinearAxis.ToDouble(price.Price)));
             }
 
+            return series;
+        }
+
+        private LineSeries GenPointsTest()
+        {
+            OxyPlot.Series.LineSeries series = new LineSeries();
+            Random rd = new Random();
+            for (int i = 1; i < 15; i++)
+            {
+                series.Points.Add(new DataPoint(i, rd.Next()));
+            }
             return series;
         }
 

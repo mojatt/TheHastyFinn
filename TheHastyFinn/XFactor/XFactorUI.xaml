@@ -11,6 +11,11 @@
         <local:XFactorGraphModel/>
     </Window.DataContext>
     <Grid>
-        <oxy:PlotView Model="{Binding MyModel}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <oxy:PlotView Model="{Binding TickerModel}" Grid.Row="1"/>
+        <oxy:PlotView Model="{Binding XFactorModel}" Grid.Row="2"/>
     </Grid>
 </Window>

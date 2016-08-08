@@ -21,11 +21,11 @@ namespace TheHastyFinn
             End = DateTime.Now;
         }
 
-        public IEnumerable<HistoricalPrice> HistPrices()
+        public List<HistoricalPrice> HistPrices()
         {
             var hps = new HistoricalPriceService();
 
-            IEnumerable<HistoricalPrice> histprices = hps.Get(Ticker, Start, End, Period.Daily);
+            List<HistoricalPrice> histprices = hps.Get(Ticker, Start, End, Period.Daily) as List<HistoricalPrice>;
 
             return histprices;
         }

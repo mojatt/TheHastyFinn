@@ -525,6 +525,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="XFactor\XFactor.cs" />
+    <Compile Include="XFactor\XFactorAlgoData.cs" />
     <Compile Include="XFactor\XFactorGraphModel.cs" />
     <Compile Include="XFactor\XFactorUI.xaml.cs">
       <DependentUpon>XFactorUI.xaml</DependentUpon>

@@ -22,6 +22,8 @@ namespace TheHastyFinn
     {
         FScore fscorelist;
 
+        private XFactorUI xfui = null;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -49,7 +51,12 @@ namespace TheHastyFinn
             XFactorUI xfui = new XFactorUI();
             xfui.DataContext = xf.XFGraphModel;
             xfui.Show();
+        }
 
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            if (fscorelist == null) return;
+            if (xfui == null) return;
         }
     }
 }

@@ -9,6 +9,7 @@
     <Grid>
         <Button x:Name="button" Content="Populate FScore" HorizontalAlignment="Left" Margin="10,288,0,0" VerticalAlignment="Top" Width="100" Click="button_Click" RenderTransformOrigin="0.493,0.611"/>
         <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="273" VerticalAlignment="Top" Width="100" Margin="10,10,0,0" SelectionChanged="listBox_SelectionChanged"/>
+        <Button x:Name="button1" Content="Refresh" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="115,288,0,0" Click="button1_Click"/>
 
     </Grid>
 </Window>
