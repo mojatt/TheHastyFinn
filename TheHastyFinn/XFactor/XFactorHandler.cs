@@ -16,7 +16,7 @@ namespace TheHastyFinn
             xF = new XFactor(ticker);
 
             xFGM = new XFactorGraphModel();
-            xFGM.LoadData(ticker, xF.Quotes);
+            xFGM.LoadData(xF);
         }
     }
 }

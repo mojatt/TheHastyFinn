@@ -15,6 +15,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <oxy:PlotView Model="{Binding TickerModel}" Grid.Row="1"/>
+        <oxy:PlotView Model="{Binding TickerModel}" Grid.Row="0"/>
+        <oxy:PlotView Model="{Binding XFactorModel}" Grid.Row="1"/>
     </Grid>
 </Window>

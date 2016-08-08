@@ -15,36 +15,24 @@ namespace TheHastyFinn
         public XFactor(string ticker)
         {
             Ticker = ticker;
-
-            //_graphmodel = new XFactorGraphModel();
-            //_graphmodel.StockTicker = ticker;
-
+            
             StockQuotes sq = new StockQuotes(Ticker);
             Quotes = sq.HistPrices();
 
             Periods = new List<int>() { 25, 50, 75, 100 };
 
-            PeriodVelocityData = new Dictionary<int, List<decimal>>();
-            PeriodGravityData = new Dictionary<int, List<decimal>>();
+            PeriodVelocityData = new Dictionary<int, List<double>>();
+            PeriodGravityData = new Dictionary<int, List<double>>();
 
             GenXFactor();
         }
 
         public string Ticker { get; private set; }
-        public Dictionary<int,List<decimal>> PeriodVelocityData { get; set; }
-        public Dictionary<int, List<decimal>> PeriodGravityData { get; set; }
+        public Dictionary<int, List<double>> PeriodVelocityData { get; set; }
+        public Dictionary<int, List<double>> PeriodGravityData { get; set; }
 
         public List<HistoricalPrice> Quotes { get; set; }
         public List<int> Periods { get; set; }
-        
-        /*
-        private XFactorGraphModel _graphmodel;
-        public XFactorGraphModel XFGraphModel
-        {
-            get { return _graphmodel; }
-            private set { _graphmodel = value; }
-        }
-        */
 
         // calculate XFactor across many moving windows (25, 50, 100, 125, 150, etc).
         // maybe even have a spread? what do the trends look like for diff intervals and ranges?
@@ -55,8 +43,8 @@ namespace TheHastyFinn
             
             foreach (int period in Periods)
             {
-                List<decimal> velocity = new List<decimal>();
-                List<decimal> gravity = new List<decimal>();
+                List<double> velocity = new List<double>();
+                List<double> gravity = new List<double>();
 
                 data.ResetValues();
 
@@ -111,14 +99,14 @@ namespace TheHastyFinn
 
                     // calc num of periods since high/low
                     data.pSinceHighHi = i - data.pHighHi;
-                    data.pSinceLowLo = i - data.pSinceLowLo;
+                    data.pSinceLowLo = i - data.pLowLo;
 
                     // calc velocity
-                    decimal v = ((period - data.pSinceHighHi) / period) * 100;
+                    double v = (((double)period - (double)data.pSinceHighHi) / (double)period) * 100;
                     velocity.Add(v);
 
                     // calc gravity
-                    decimal g = ((period - data.pSinceLowLo) / period) * 100;
+                    double g = (((double)period - (double)data.pSinceLowLo) / (double)period) * 100;
                     gravity.Add(g);
                 }
 
@@ -136,7 +124,8 @@ namespace TheHastyFinn
             {
                 if (segment[i].Price > max)
                 {
-                    data.Price = segment[i].Price;
+                    max = segment[i].Price;
+                    data.Price = max;
                     data.Index = i;
                 }
             }
@@ -150,9 +139,10 @@ namespace TheHastyFinn
 
             for (int i = 0; i < segment.Count(); i++)
             {
-                if(segment[i].Price > min)
+                if(segment[i].Price < min)
                 {
-                    data.Price = segment[i].Price;
+                    min = segment[i].Price;
+                    data.Price = min;
                     data.Index = i;
                 }
             }

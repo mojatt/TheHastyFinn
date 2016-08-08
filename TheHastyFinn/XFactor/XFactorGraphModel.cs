@@ -20,32 +20,31 @@ namespace TheHastyFinn
         public PlotModel XFactorModel { get; private set; }
 
         public List<DateTime> Dates { get; set; }
-        public List<HistoricalPrice> Quotes { get; set; }
+        //public List<HistoricalPrice> Quotes { get; set; }
+
+        public XFactor XF { get; set; }
 
         public XFactorGraphModel()
         {
             this.TickerModel = new PlotModel();
             this.XFactorModel = new PlotModel();
 
-            Quotes = null;
+            //Quotes = null;
             _ticker = "";
         }
 
-        public void LoadData(string ticker, List<HistoricalPrice> quotes)
+        public void LoadData(XFactor xf)
         {
-            StockTicker = ticker;
-            Quotes = quotes;
+            XF = xf;
             UpdateModel();
         }
 
         public void UpdateModel()
         {
-            if (Quotes == null) return;
-
             /*
              * basic ticker
              */
-            this.TickerModel.Title = StockTicker;
+            this.TickerModel.Title = XF.Ticker;
             this.TickerModel.Series.Add(GenPoints());
             this.TickerModel.Axes.Add(new DateTimeAxis
             {
@@ -58,7 +57,8 @@ namespace TheHastyFinn
              * xfactor ticker
              */
             this.XFactorModel.Title = String.Format("XFactor");
-            this.XFactorModel.Series.Add(GenPoints());
+            this.XFactorModel.Series.Add(GenPointsXFVelocity());
+            this.XFactorModel.Series.Add(GenPointsXFGravity());
             this.XFactorModel.Axes.Add(new DateTimeAxis
             {
                 Position = AxisPosition.Bottom,
@@ -67,33 +67,42 @@ namespace TheHastyFinn
             });
         }
 
-        public string StockTicker
-        {
-            get { return _ticker; }
-            set { _ticker = value; }
-        }
-
-        /*    THIS IS RECURSIVE... NOT GOOD
         private LineSeries GenPointsXFVelocity()
         {
             OxyPlot.Series.LineSeries series = new LineSeries();
+            
+            List<int> periods = XF.Periods;
+            List<double> list = XF.PeriodVelocityData[periods[0]];
+            List<HistoricalPrice> quotes = XF.Quotes;
 
-            XFactor xf = new XFactor(StockTicker);
-            List<int> periods = xf.Periods;
-            List<decimal> list = xf.PeriodVelocityData[periods[0]];
             for(int i = 0; i < list.Count(); i++)
             {
-                series.Points.Add(new DataPoint(i, Convert.ToDouble(list[i])));
+                series.Points.Add(new DataPoint(DateTimeAxis.ToDouble(quotes[i].Date), list[i]));
             }
+
             return series;
         }
-        */
+        private LineSeries GenPointsXFGravity()
+        {
+            OxyPlot.Series.LineSeries series = new LineSeries();
+
+            List<int> periods = XF.Periods;
+            List<double> list = XF.PeriodGravityData[periods[0]];
+            List<HistoricalPrice> quotes = XF.Quotes;
+
+            for (int i = 0; i < list.Count(); i++)
+            {
+                series.Points.Add(new DataPoint(DateTimeAxis.ToDouble(quotes[i].Date), list[i]));
+            }
+
+            return series;
+        }
 
         private LineSeries GenPoints()
         {
             OxyPlot.Series.LineSeries series = new LineSeries();
 
-            foreach (var price in Quotes)
+            foreach (var price in XF.Quotes)
             {
                 series.Points.Add(new DataPoint(DateTimeAxis.ToDouble(price.Date), LinearAxis.ToDouble(price.Price)));
             }
