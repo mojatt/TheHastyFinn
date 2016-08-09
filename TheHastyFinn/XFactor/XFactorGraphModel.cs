@@ -14,13 +14,10 @@ namespace TheHastyFinn
 {
     public class XFactorGraphModel
     {
-        private string _ticker;
-
         public PlotModel TickerModel { get; private set; }
         public PlotModel XFactorModel { get; private set; }
 
         public List<DateTime> Dates { get; set; }
-        //public List<HistoricalPrice> Quotes { get; set; }
 
         public XFactor XF { get; set; }
 
@@ -28,9 +25,6 @@ namespace TheHastyFinn
         {
             this.TickerModel = new PlotModel();
             this.XFactorModel = new PlotModel();
-
-            //Quotes = null;
-            _ticker = "";
         }
 
         public void LoadData(XFactor xf)
@@ -72,7 +66,7 @@ namespace TheHastyFinn
             OxyPlot.Series.LineSeries series = new LineSeries();
             
             List<int> periods = XF.Periods;
-            List<double> list = XF.PeriodVelocityData[periods[0]];
+            List<double> list = XF.PeriodVelocityData[periods[2]];
             List<HistoricalPrice> quotes = XF.Quotes;
 
             for(int i = 0; i < list.Count(); i++)
@@ -87,7 +81,7 @@ namespace TheHastyFinn
             OxyPlot.Series.LineSeries series = new LineSeries();
 
             List<int> periods = XF.Periods;
-            List<double> list = XF.PeriodGravityData[periods[0]];
+            List<double> list = XF.PeriodGravityData[periods[2]];
             List<HistoricalPrice> quotes = XF.Quotes;
 
             for (int i = 0; i < list.Count(); i++)

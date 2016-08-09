@@ -19,7 +19,7 @@ namespace TheHastyFinn
             StockQuotes sq = new StockQuotes(Ticker);
             Quotes = sq.HistPrices();
 
-            Periods = new List<int>() { 25, 50, 75, 100 };
+            Periods = new List<int>() { 50, 75, 100 };
 
             PeriodVelocityData = new Dictionary<int, List<double>>();
             PeriodGravityData = new Dictionary<int, List<double>>();
@@ -51,27 +51,48 @@ namespace TheHastyFinn
                 for(int i = 1; i < Quotes.Count(); i++)
                 {
                     int range = 1;
+                    int start = i;
+
+                    /*
+                    if(i < period)
+                    {
+                        start = 1;
+                        range = i;
+                    }
+                    else
+                    {
+                        start = i - period;
+                        range = period;
+                    }
+                    */
+                    
                     
                     if (period >= Quotes.Count() - i) // tail end of segments
                     {
-                        range = Quotes.Count() - i;
+                        range = period;
+                        start = i - period;
                     }
                     else if (i > period) // middle of segment
                     {
                         range = period;
+                        start = i - period;
                     }
                     else // beginning of segment quotes
                     {
                         range = i;
+                        start = 1;
                     }
+                    
 
                     // TODO 
                     // TODO --- two ways to calculate the window . start full or end full
                     // TODO --- current way is to end full
+                    // want the most recent data to be accurate so the end must be full & good
                     // TODO 
-                    List<HistoricalPrice> segment = Quotes.GetRange(i, range);
+                    List<HistoricalPrice> segment = Quotes.GetRange(start, range);
 
-                    // this can expire !! must account for that? - old comment
+                    // the hi/lo can expire! must account for that by reset if the previous 
+                    // pHighHi is outside of the segment range
 
                     // find the highest high for period
                     if (data.pHighHi < (i - period))
@@ -88,7 +109,7 @@ namespace TheHastyFinn
                     // find lowest low for period
                     if (data.pLowLo < (i - period))
                     {
-                        data.LowestLo = decimal.MaxValue;
+                        data.LowestLo = double.MaxValue;
                     }
                     SearchData fpmin = FindPeriodMin(segment);
                     if(fpmin.Price < data.LowestLo)
@@ -118,13 +139,13 @@ namespace TheHastyFinn
         private SearchData FindPeriodMax(List<HistoricalPrice> segment)
         {
             SearchData data = new SearchData();
-            decimal max = 0;
+            double max = 0;
 
             for(int i = 0; i < segment.Count(); i++)
             {
-                if (segment[i].Price > max)
+                if ((double)segment[i].Price > max)
                 {
-                    max = segment[i].Price;
+                    max = (double)segment[i].Price;
                     data.Price = max;
                     data.Index = i;
                 }
@@ -135,13 +156,13 @@ namespace TheHastyFinn
         private SearchData FindPeriodMin(List<HistoricalPrice> segment)
         {
             SearchData data = new SearchData();
-            decimal min = decimal.MaxValue;
+            double min = double.MaxValue;
 
             for (int i = 0; i < segment.Count(); i++)
             {
-                if(segment[i].Price < min)
+                if((double)segment[i].Price < min)
                 {
-                    min = segment[i].Price;
+                    min = (double)segment[i].Price;
                     data.Price = min;
                     data.Index = i;
                 }
@@ -153,7 +174,7 @@ namespace TheHastyFinn
 
     class SearchData
     {
-        public decimal Price { get; set; }
+        public double Price { get; set; }
         public int Index { get; set; }
 
         public SearchData() { }

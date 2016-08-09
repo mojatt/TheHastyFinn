@@ -27,6 +27,8 @@ namespace TheHastyFinn
 
             List<HistoricalPrice> histprices = hps.Get(Ticker, Start, End, Period.Daily) as List<HistoricalPrice>;
 
+            histprices.Reverse(); // want them in chron order.
+
             return histprices;
         }
 
