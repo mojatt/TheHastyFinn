@@ -103,7 +103,6 @@ namespace TheHastyFinn
 
             return series;
         }
-
         private LineSeries GenPointsTest()
         {
             OxyPlot.Series.LineSeries series = new LineSeries();
