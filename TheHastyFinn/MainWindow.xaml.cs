@@ -82,8 +82,8 @@ namespace TheHastyFinn
         // refresh button
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            if (fscorelist == null) return;
-            if (xfui == null) return;
+            StockSharpStart sss = new StockSharpStart();
+            sss.Show();
         }
 
         private void button_addholding_Click(object sender, RoutedEventArgs e)

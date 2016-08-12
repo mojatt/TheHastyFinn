@@ -519,6 +519,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="StockSharp\StockSharpStart.xaml.cs">
+      <DependentUpon>StockSharpStart.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\StockQuotes.cs" />
     <Compile Include="XFactor\FScore.cs" />
     <Compile Include="XFactor\FScoreHolding.cs" />
@@ -545,6 +548,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="StockSharp\StockSharpStart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="XFactor\XFactorUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -9,7 +9,7 @@
     <Grid>
         <Button x:Name="button" Content="Populate FScore" HorizontalAlignment="Left" Margin="10,288,0,0" VerticalAlignment="Top" Width="100" Click="button_Click" RenderTransformOrigin="0.493,0.611"/>
         <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="245" VerticalAlignment="Top" Width="100" Margin="10,38,0,0" SelectionChanged="listBox_SelectionChanged"/>
-        <Button x:Name="button1" Content="Refresh" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="432,288,0,0" Click="button1_Click"/>
+        <Button x:Name="button1" Content="StockSharp" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="432,288,0,0" Click="button1_Click"/>
         <Label x:Name="label" Content="Current Stocks&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="100" Height="28"/>
         <ListBox x:Name="listBox_holding" HorizontalAlignment="Left" Height="218" Margin="115,38,0,0" VerticalAlignment="Top" Width="100" SelectionChanged="listBox_holding_SelectionChanged"/>
         <Label x:Name="label_Copy" Content="Holding Stocks&#xA;" HorizontalAlignment="Left" Margin="115,10,0,0" VerticalAlignment="Top" Width="100" Height="28"/>
