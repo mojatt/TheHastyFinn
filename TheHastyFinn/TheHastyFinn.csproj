@@ -521,6 +521,7 @@
     </ApplicationDefinition>
     <Compile Include="Utilities\StockQuotes.cs" />
     <Compile Include="XFactor\FScore.cs" />
+    <Compile Include="XFactor\FScoreHolding.cs" />
     <Compile Include="XFactor\WebCSVHandler.cs">
       <SubType>Component</SubType>
     </Compile>

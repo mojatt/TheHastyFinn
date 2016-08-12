@@ -27,14 +27,14 @@ namespace TheHastyFinn
 
             XFH = xfh;
 
-            this.DataContext = XFH.xFGM;
+            this.DataContext = XFH.xFactorGraphModel;
 
             UpdatePeriodBox();
         }
 
         private void UpdatePeriodBox()
         {
-            foreach (int period in XFH.xF.Periods)
+            foreach (int period in XFH.xFactor.Periods)
             {
                 listBox_Periods.Items.Add(period);
             }
@@ -42,15 +42,15 @@ namespace TheHastyFinn
 
         private void listBox_Periods_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            XFH.xFGM.PeriodsToPlot.Clear();
+            XFH.xFactorGraphModel.PeriodsToPlot.Clear();
 
             foreach (Object item in listBox_Periods.SelectedItems)
             {
                 int period = Convert.ToInt32(item);
-                XFH.xFGM.PeriodsToPlot.Add(period);
+                XFH.xFactorGraphModel.PeriodsToPlot.Add(period);
             }
 
-            XFH.xFGM.UpdateModel();
+            XFH.xFactorGraphModel.UpdateModel();
             this.BotPlot.InvalidatePlot(true);
         }
     }

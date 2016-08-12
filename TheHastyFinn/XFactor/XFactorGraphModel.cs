@@ -87,6 +87,8 @@ namespace TheHastyFinn
                 series.Points.Add(new DataPoint(DateTimeAxis.ToDouble(quotes[i].Date), list[i]));
             }
 
+            series.Color = OxyColors.Green;
+
             return series;
         }
         private LineSeries GenPointsXFGravity(int period)
@@ -101,6 +103,8 @@ namespace TheHastyFinn
             {
                 series.Points.Add(new DataPoint(DateTimeAxis.ToDouble(quotes[i].Date), list[i]));
             }
+
+            series.Color = OxyColors.Red;
 
             return series;
         }

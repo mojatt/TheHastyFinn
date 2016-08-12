@@ -8,15 +8,15 @@ namespace TheHastyFinn
 {
     public class XFactorHandler
     {
-        public XFactor xF { get; set; }
-        public XFactorGraphModel xFGM { get; set; }
+        public XFactor xFactor { get; set; }
+        public XFactorGraphModel xFactorGraphModel { get; set; }
 
         public XFactorHandler(string ticker)
         {
-            xF = new XFactor(ticker);
+            xFactor = new XFactor(ticker);
 
-            xFGM = new XFactorGraphModel();
-            xFGM.LoadData(xF);
+            xFactorGraphModel = new XFactorGraphModel();
+            xFactorGraphModel.LoadData(xFactor);
         }
     }
 }
