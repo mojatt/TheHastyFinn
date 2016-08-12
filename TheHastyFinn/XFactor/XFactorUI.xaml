@@ -14,10 +14,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
         <oxy:PlotView x:Name="TopPlot" Model="{Binding TickerModel}" Grid.Row="0"/>
         <oxy:PlotView x:Name="BotPlot" Model="{Binding XFactorModel}" Grid.Row="1"/>
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="0,3,0,0" Grid.Row="2" VerticalAlignment="Top" Width="120"/>
+        <ListBox x:Name="listBox_Periods" HorizontalAlignment="Left" Height="100" Margin="10,0,0,0" Grid.Row="2" VerticalAlignment="Top" Width="100" SelectionMode="Multiple" SelectionChanged="listBox_Periods_SelectionChanged"/>
     </Grid>
 </Window>

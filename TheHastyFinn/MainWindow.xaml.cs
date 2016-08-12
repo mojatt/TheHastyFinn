@@ -49,8 +49,8 @@ namespace TheHastyFinn
             //XFactor xf = new XFactor(stock);
             XFactorHandler xfh = new XFactorHandler(stock);
 
-            XFactorUI xfui = new XFactorUI();
-            xfui.DataContext = xfh.xFGM;
+            XFactorUI xfui = new XFactorUI(xfh);
+            //xfui.DataContext = xfh.xFGM;
             xfui.Show();
         }
 

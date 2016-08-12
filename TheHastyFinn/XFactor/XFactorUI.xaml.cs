@@ -19,10 +19,39 @@ namespace TheHastyFinn
     /// </summary>
     public partial class XFactorUI : Window
     {
-        public XFactorUI()
+        public XFactorHandler XFH { get; set; }
+
+        public XFactorUI(XFactorHandler xfh)
         {
             InitializeComponent();
+
+            XFH = xfh;
+
+            this.DataContext = XFH.xFGM;
+
+            UpdatePeriodBox();
         }
-        
+
+        private void UpdatePeriodBox()
+        {
+            foreach (int period in XFH.xF.Periods)
+            {
+                listBox_Periods.Items.Add(period);
+            }
+        }
+
+        private void listBox_Periods_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            XFH.xFGM.PeriodsToPlot.Clear();
+
+            foreach (Object item in listBox_Periods.SelectedItems)
+            {
+                int period = Convert.ToInt32(item);
+                XFH.xFGM.PeriodsToPlot.Add(period);
+            }
+
+            XFH.xFGM.UpdateModel();
+            this.BotPlot.InvalidatePlot(true);
+        }
     }
 }

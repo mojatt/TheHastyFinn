@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TheHastyFinn
 {
-    class XFactorHandler
+    public class XFactorHandler
     {
         public XFactor xF { get; set; }
         public XFactorGraphModel xFGM { get; set; }

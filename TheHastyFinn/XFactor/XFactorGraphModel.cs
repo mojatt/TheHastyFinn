@@ -18,6 +18,7 @@ namespace TheHastyFinn
         public PlotModel XFactorModel { get; private set; }
 
         public List<DateTime> Dates { get; set; }
+        public List<int> PeriodsToPlot { get; set; }
 
         public XFactor XF { get; set; }
 
@@ -25,6 +26,8 @@ namespace TheHastyFinn
         {
             this.TickerModel = new PlotModel();
             this.XFactorModel = new PlotModel();
+
+            this.PeriodsToPlot = new List<int>();
         }
 
         public void LoadData(XFactor xf)
@@ -35,38 +38,48 @@ namespace TheHastyFinn
 
         public void UpdateModel()
         {
+            this.TickerModel.Series.Clear();
+            this.TickerModel.Axes.Clear();
+
+            this.XFactorModel.Series.Clear();
+            this.XFactorModel.Axes.Clear();
+
             /*
              * basic ticker
              */
             this.TickerModel.Title = XF.Ticker;
-            this.TickerModel.Series.Add(GenPoints());
             this.TickerModel.Axes.Add(new DateTimeAxis
             {
                 Position = AxisPosition.Bottom,
                 StringFormat = "yyyy-MM-dd",
                 IntervalType = DateTimeIntervalType.Days,
             });
+            this.TickerModel.Series.Add(GenPoints());
 
             /*
              * xfactor ticker
              */
             this.XFactorModel.Title = String.Format("XFactor");
-            this.XFactorModel.Series.Add(GenPointsXFVelocity());
-            this.XFactorModel.Series.Add(GenPointsXFGravity());
             this.XFactorModel.Axes.Add(new DateTimeAxis
             {
                 Position = AxisPosition.Bottom,
                 StringFormat = "yyyy-MM-dd",
                 IntervalType = DateTimeIntervalType.Days,
             });
+            foreach (int p in PeriodsToPlot)
+            {
+                this.XFactorModel.Series.Add(GenPointsXFVelocity(p));
+                this.XFactorModel.Series.Add(GenPointsXFGravity(p));
+            }
+
         }
 
-        private LineSeries GenPointsXFVelocity()
+        private LineSeries GenPointsXFVelocity(int period)
         {
             OxyPlot.Series.LineSeries series = new LineSeries();
             
             List<int> periods = XF.Periods;
-            List<double> list = XF.PeriodVelocityData[periods[2]];
+            List<double> list = XF.PeriodVelocityData[period];
             List<HistoricalPrice> quotes = XF.Quotes;
 
             for(int i = 0; i < list.Count(); i++)
@@ -76,12 +89,12 @@ namespace TheHastyFinn
 
             return series;
         }
-        private LineSeries GenPointsXFGravity()
+        private LineSeries GenPointsXFGravity(int period)
         {
             OxyPlot.Series.LineSeries series = new LineSeries();
 
             List<int> periods = XF.Periods;
-            List<double> list = XF.PeriodGravityData[periods[2]];
+            List<double> list = XF.PeriodGravityData[period];
             List<HistoricalPrice> quotes = XF.Quotes;
 
             for (int i = 0; i < list.Count(); i++)
