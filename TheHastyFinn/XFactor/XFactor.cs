@@ -19,7 +19,7 @@ namespace TheHastyFinn
             StockQuotes sq = new StockQuotes(Ticker);
             Quotes = sq.HistPrices();
 
-            Periods = new List<int>() { 50, 75, 100 };
+            Periods = new List<int>() { 25, 30, 50, 60, 75, 90, 100, 120 };
 
             PeriodVelocityData = new Dictionary<int, List<double>>();
             PeriodGravityData = new Dictionary<int, List<double>>();

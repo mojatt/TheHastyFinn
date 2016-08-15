@@ -23,9 +23,10 @@ namespace TheHastyFinn
 
         public List<HistoricalPrice> HistPrices()
         {
+            List<HistoricalPrice> histprices = null;
             var hps = new HistoricalPriceService();
 
-            List<HistoricalPrice> histprices = hps.Get(Ticker, Start, End, Period.Daily) as List<HistoricalPrice>;
+            histprices = hps.Get(Ticker, Start, End, Period.Daily) as List<HistoricalPrice>;
 
             histprices.Reverse(); // want them in chron order.
 

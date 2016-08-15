@@ -120,6 +120,9 @@ namespace TheHastyFinn
         private void listBox_holding_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListBox box = (sender as ListBox);
+            if (box.SelectedItem == null)
+                return;
+
             string stock = box.SelectedItem.ToString();
 
             // load up the stock and analize
