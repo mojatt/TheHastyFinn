@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using OxyPlot.Series;
 
-using YSQ.core.Historical;
+using YahooFinanceAPI;
 
 namespace TheHastyFinn
 {
@@ -31,7 +31,7 @@ namespace TheHastyFinn
         public Dictionary<int, List<double>> PeriodVelocityData { get; set; }
         public Dictionary<int, List<double>> PeriodGravityData { get; set; }
 
-        public List<HistoricalPrice> Quotes { get; set; }
+        public List<HistoryPrice> Quotes { get; set; }
         public List<int> Periods { get; set; }
 
         // calculate XFactor across many moving windows (25, 50, 100, 125, 150, etc).
@@ -89,7 +89,7 @@ namespace TheHastyFinn
                     // TODO --- current way is to end full
                     // want the most recent data to be accurate so the end must be full & good
                     // TODO 
-                    List<HistoricalPrice> segment = Quotes.GetRange(start, range);
+                    List<HistoryPrice> segment = Quotes.GetRange(start, range);
 
                     // the hi/lo can expire! must account for that by reset if the previous 
                     // pHighHi is outside of the segment range
@@ -136,16 +136,16 @@ namespace TheHastyFinn
             }
         }
 
-        private SearchData FindPeriodMax(List<HistoricalPrice> segment)
+        private SearchData FindPeriodMax(List<HistoryPrice> segment)
         {
             SearchData data = new SearchData();
             double max = 0;
 
             for(int i = 0; i < segment.Count(); i++)
             {
-                if ((double)segment[i].Price > max)
+                if ((double)segment[i].Close > max)
                 {
-                    max = (double)segment[i].Price;
+                    max = (double)segment[i].Close;
                     data.Price = max;
                     data.Index = i;
                 }
@@ -153,16 +153,16 @@ namespace TheHastyFinn
             return data;
         }
 
-        private SearchData FindPeriodMin(List<HistoricalPrice> segment)
+        private SearchData FindPeriodMin(List<HistoryPrice> segment)
         {
             SearchData data = new SearchData();
             double min = double.MaxValue;
 
             for (int i = 0; i < segment.Count(); i++)
             {
-                if((double)segment[i].Price < min)
+                if((double)segment[i].Close < min)
                 {
-                    min = (double)segment[i].Price;
+                    min = (double)segment[i].Close;
                     data.Price = min;
                     data.Index = i;
                 }

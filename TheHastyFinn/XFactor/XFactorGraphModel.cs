@@ -8,7 +8,7 @@ using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 
-using YSQ.core.Historical;
+using YahooFinanceAPI;
 
 namespace TheHastyFinn
 {
@@ -80,7 +80,7 @@ namespace TheHastyFinn
             
             List<int> periods = XF.Periods;
             List<double> list = XF.PeriodVelocityData[period];
-            List<HistoricalPrice> quotes = XF.Quotes;
+            List<HistoryPrice> quotes = XF.Quotes;
 
             for(int i = 0; i < list.Count(); i++)
             {
@@ -97,7 +97,7 @@ namespace TheHastyFinn
 
             List<int> periods = XF.Periods;
             List<double> list = XF.PeriodGravityData[period];
-            List<HistoricalPrice> quotes = XF.Quotes;
+            List<HistoryPrice> quotes = XF.Quotes;
 
             for (int i = 0; i < list.Count(); i++)
             {
@@ -115,7 +115,7 @@ namespace TheHastyFinn
 
             foreach (var price in XF.Quotes)
             {
-                series.Points.Add(new DataPoint(DateTimeAxis.ToDouble(price.Date), LinearAxis.ToDouble(price.Price)));
+                series.Points.Add(new DataPoint(DateTimeAxis.ToDouble(price.Date), LinearAxis.ToDouble(price.Close)));
             }
 
             return series;

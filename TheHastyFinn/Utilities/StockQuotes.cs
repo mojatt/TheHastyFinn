@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using YSQ.core.Historical;
+using YahooFinanceAPI;
 
 namespace TheHastyFinn
 {
     class StockQuotes
     {
-        // https://github.com/jchristian/yahoo_stock_quotes
+        // https://github.com/dennislwy/YahooFinanceAPI.git
 
         public StockQuotes(string ticker)
         {
@@ -21,14 +21,16 @@ namespace TheHastyFinn
             End = DateTime.Now;
         }
 
-        public List<HistoricalPrice> HistPrices()
+        public List<HistoryPrice> HistPrices()
         {
-            List<HistoricalPrice> histprices = null;
-            var hps = new HistoricalPriceService();
+            // first get valid token from yahoo finance
+            while(string.IsNullOrEmpty(Token.Cookie) | string.IsNullOrEmpty(Token.Crumb))
+            {
+                Token.Refresh();
+            }
 
-            histprices = hps.Get(Ticker, Start, End, Period.Daily) as List<HistoricalPrice>;
-
-            histprices.Reverse(); // want them in chron order.
+            List<HistoryPrice> histprices = Historical.Get(Ticker, Start, End);
+            //histprices.Reverse();
 
             return histprices;
         }
