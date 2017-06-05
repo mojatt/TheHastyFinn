@@ -45,6 +45,7 @@ namespace TheHastyFinn
                     fss.Name = csv.GetField<string>(1);
                     fss.Sector = csv.GetField<string>(2);
                     fss.Industry = csv.GetField<string>(3);
+                    fss.LastPrice = csv.GetField<string>(6);
 
                     _list.Add(fss);
                 }
@@ -62,5 +63,6 @@ namespace TheHastyFinn
         public string Name { get; set; }
         public string Sector { get; set; }
         public string Industry { get; set; }
+        public string LastPrice { get; set; }
     }
 }

@@ -61,7 +61,8 @@ namespace TheHastyFinn
 
             foreach(FScoreStock stock in fscorelist.StockList)
             {
-                listBox.Items.Add(stock.Ticker);
+                string tick = stock.Ticker + " - " + stock.LastPrice;
+                listBox.Items.Add(tick);
             }
         }
 
@@ -71,6 +72,18 @@ namespace TheHastyFinn
 
             ListBox box = (sender as ListBox);
             string stock = box.SelectedItem.ToString();
+
+            string[] tokens = stock.Split();
+
+            // find the right stock from the entry (we added price, remember?)
+            foreach (FScoreStock s in fscorelist.StockList)
+            {
+                if(tokens[0].Equals(s.Ticker))
+                {
+                    stock = s.Ticker;
+                    break;
+                }
+            }
 
             // load up the stock and analize
             XFactorHandler xfh = new XFactorHandler(stock);
